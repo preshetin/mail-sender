@@ -19,6 +19,10 @@ class MailSenderServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/Resource/views', 'mail-sender');
 
         $this->loadMigrationsFrom(__DIR__.'/Database/migrations');
+
+        $this->publishes([
+            __DIR__.'/config.php' => config_path('mail-sender.php'),
+        ]);
     }
 
     /**

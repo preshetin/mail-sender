@@ -28,7 +28,7 @@ class CustomMail extends Mailable
     {
         $this->fromEmail = $fromEmail;
         $this->subject = $subject;
-        $this->body = $body;
+        $this->body = nl2br(e($body));
         $this->paperAttachments = $paperAttachments;
     }
 
@@ -41,7 +41,7 @@ class CustomMail extends Mailable
     {
         $message = $this->from($this->fromEmail)
             ->subject($this->subject)
-            ->view('mail-sender::emails.custom');
+            ->view(config('mail-sender.mail_view'));
 
         if (count($this->paperAttachments) == 0) {
             return $message;
