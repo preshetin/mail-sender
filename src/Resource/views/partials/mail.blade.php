@@ -1,20 +1,40 @@
 
 <div class="row">
     <div class="col-md-6">
+
         {!! BootForm::open()->post()->action(route('mail-sender.mails.store')) !!}
+
             <h4>From: <a href="mailto:{{ \Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser()->email }}">{{ \Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser()->email }}</a></h4>
             <h4>To: <a href="mailto:{{ $mailable_entity->getEmail() }}">{{ $mailable_entity->getEmail() }}</a></h4>
-            {!! BootForm::hidden('mailable_entity_id')->value($mailable_entity->id) !!}
-            {!! BootForm::hidden('mailable_entity_class')->value(get_class($mailable_entity)) !!}
-            {!! BootForm::hidden('from')->value(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser() ? \Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser()->email : '') !!}
+
+            {!! BootForm::hidden('mailable_entity_id')
+                    ->value($mailable_entity->id) !!}
+
+            {!! BootForm::hidden('mailable_entity_class')
+                    ->value(get_class($mailable_entity)) !!}
+
+            {!! BootForm::hidden('from')
+                    ->value(\Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser() ? \Cartalyst\Sentinel\Laravel\Facades\Sentinel::getUser()->email : '') !!}
+
             {!! BootForm::hidden('to')->value($mailable_entity->getEmail()) !!}
-            {!! BootForm::select('Template', 'template')->id('mail-template')->options($mail_template_list)
-                ->data('mailable-entity-id', $mailable_entity->id)->data('mailable-entity-class', get_class($mailable_entity)) !!}
-            {!! BootForm::text('Subject', 'subject')->id('mail-subject') !!}
-            {!! BootForm::textarea('Body', 'body')->id('mail-body') !!}
+
+            {!! BootForm::select('Template', 'template')
+                    ->id('mail-template')
+                    ->options(['' => ' - '] + \Preshetin\MailSender\Model\MailTemplate::all()->pluck('name', 'id')->toArray())
+                    ->data('mailable-entity-id', $mailable_entity->id)
+                    ->data('mailable-entity-class', get_class($mailable_entity)) !!}
+
+            {!! BootForm::text('Subject', 'subject')
+                    ->id('mail-subject') !!}
+
+            {!! BootForm::textarea('Body', 'body')
+                ->id('mail-body') !!}
         
-            {!! BootForm::submit('Send Mail', 'send_mail')->addClass('btn-success')->removeClass('btn-default') !!}
+            {!! BootForm::submit('Send Mail', 'send_mail')
+                    ->class('btn btn-success') !!}
+
         {!! BootForm::close() !!}
+
     </div>
     <div class="col-md-6">
         @if($mailable_entity->mail_logs->count())

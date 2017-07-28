@@ -19,6 +19,7 @@ class CreateMailsTable extends Migration
             $table->string('to');
             $table->string('subject')->nullable();
             $table->text('body')->nullable();
+            $table->jsonb('attachments')->after('body')->nullable();
             $table->integer('mailable_id');
             $table->string('mailable_type');
             $table->timestamps();
