@@ -16,7 +16,13 @@ providers' => [
 ];
 ```
 
-3. Add `MailableEntity` interface & `MailSenderTrait` trait in any Eloquent model:
+3. Run migrations to create `mail_logs` & `mail_templates` tables:
+```
+php artisan migrate
+```
+
+
+4. Add `MailableEntity` interface & `MailSenderTrait` trait in any Eloquent model:
 ```
 use Preshetin\MailSender\MailSenderTrait;
 use Preshetin\MailSender\Model\MailableEntity;
@@ -29,7 +35,7 @@ class Order extends Model implements MailableEntity
 }
 ```
 
-4. `MailableEntity` interface will require you to add a couple of methods:
+5. `MailableEntity` interface will require you to add a couple of methods:
 
 This is where email sends TO:
 ```
